@@ -3,33 +3,26 @@
 
 /* Definições e paleta de cores do tema */
 :root {
-    /* Fonte padrão */
-    --font-family: Consolas, "Courier New", "Lucida Console", Monaco, monospace;
+    --font-family: 'Poppins', sans-serif, "Courier New", "Lucida Console", Monaco, monospace;
     --font-size: 16px;
 
-    /* Cor de fundo do site */
-    --background-color: rgb(23, 64, 92);
+    /* Cor de fundo mais suave */
+    --background-color: #f8f3e4;
 
-    /* Cor 1 do tema */
-    --primary-color: steelblue;
+    /* Cores vibrantes e sofisticadas */
+    --primary-color: #f42b03; /* Rosa vibrante */
+    --secondary-color: #ffa9a3; /* Laranja quente */
+    --tertiary-color: #00838F; /* Azul profundo */
+    --neutral-color: #4B4F54;  /* Cinza escuro elegante */
+    --accent-color: #fdd835; /* Amarelo suave */
 
-    /* Cor 2 do tema */
-    --secondary-color: orange;
-
-    /* Cor 3 do tema */
-    --tertiary-color: orangered;
-
-    /* Cor de fundo das caixas*/
-    --box-background-color: white;
+    /* Cor de fundo das caixas */
+    --box-background-color: #ffffff;
 
     /* Definição do logotipo */
-    --logo-border: .8px black;
+    --logo-border: 1px solid #4B4F54;
 }
 
-* {
-    box-sizing: border-box;
-    outline: none;
-}
 
 html,
 body,
@@ -45,7 +38,9 @@ body,
 
 body {
     background-color: var(--background-color);
+    font-family: var(--font-family);
 }
+
 
 /* Estilos de links */
 a {
@@ -96,19 +91,22 @@ button {
 }
 
 #wrap>header i {
-    display: block;
     margin-right: .5rem;
     font-size: 3rem;
     color: var(--secondary-color);
-    -webkit-text-stroke: var(--logo-border);
-    text-shadow: 2px 2px 5px grey;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2); /* Sombra mais suave */
+    transform: rotate(10deg);  /* Rotação suave para dar um toque artístico */
 }
 
 #wrap>header h1 {
     color: var(--primary-color);
     margin: 0;
-    text-shadow: 2px 2px 5px grey;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 2rem;
 }
+
 
 #wrap>nav {
     display: flex;
@@ -116,21 +114,26 @@ button {
 }
 
 #wrap>nav>a {
-    color: var(--primary-color);
+    color: var(--neutral-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: .25rem .5rem;
+    padding: .5rem 1rem;
     margin-right: .5rem;
     text-transform: uppercase;
+    font-weight: 500;
+    border-radius: .5rem;
+    transition: all 0.3s ease;
 }
 
 #wrap>nav>a:hover {
     color: var(--box-background-color);
     background-color: var(--primary-color);
-    border-radius: .25rem;
+    border-radius: .5rem;
+    transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
 }
+
 
 #wrap>nav>a:last-child {
     margin-left: auto;
@@ -229,9 +232,22 @@ button {
 
 #wrap>main form input,
 #wrap>main form textarea {
-    width: 100%;
-    border: 1px solid red;
+    padding: .75rem 1rem;
+    border-radius: .5rem;
+    border: 1px solid #DDD;
+    background-color: #FAFAFA;
+    font-size: 1rem;
+    color: var(--neutral-color);
+    transition: all 0.3s ease;
 }
+
+#wrap>main form input:focus,
+#wrap>main form textarea:focus {
+    border-color: var(--primary-color);
+    background-color: #fff8e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 
 #wrap>main form textarea {
     resize: vertical;
@@ -286,15 +302,19 @@ button {
 .item {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
-    background-color: rgb(255, 245, 226);
+    margin-bottom: 1.5rem;
+    background-color: #fff;
+    border-radius: .5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .item img {
     display: block;
-    width: 5rem;
-    height: 5rem;
-    margin-right: .5rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
 }
 
 .item div {
@@ -303,25 +323,32 @@ button {
 }
 
 .item h4 {
-    margin: 0 0 .5rem 0;
+    margin: 0;
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
 .item small {
     display: block;
     padding-top: .5rem;
+    color: var(--neutral-color);
+    font-size: 0.9rem;
 }
+
 
 #myDialog {
     border: none;
-    border-radius: .3rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
+    border-radius: .5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
     width: 90%;
-    max-width: 300px;
+    max-width: 320px;
     margin: auto;
-    background-color: rgb(220, 255, 220);
-    font-size: 90%;
+    background-color: #FFF3E0;
+    font-size: 1rem;
+    color: var(--neutral-color);
 }
+
 
 #myDialog h4 {
     margin-top: 0;
@@ -342,24 +369,35 @@ button {
 .btnProfile {
     display: table;
     margin: auto;
-    padding: .25rem .5rem;
+    padding: .5rem 1rem;
     border: none;
-    border-radius: .3rem;
+    border-radius: .5rem;
     color: white;
+    font-weight: bold;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .btnProfile {
-    background-color: steelblue;
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btnLogout {
-    background-color: orange;
+    background-color: var(--secondary-color);
 }
 
 .btnSignout {
-    background-color: orangered;
+    background-color: var(--tertiary-color);
 }
+
+.btnProfile:hover,
+.btnLogout:hover,
+.btnSignout:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 
 .center {
     text-align: center;

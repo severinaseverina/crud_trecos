@@ -15,35 +15,31 @@
 
         <header>
             <a href="/">
-                <i class="fa-solid fa-cubes fa-fw"></i>
-                <h1>CRUDTrecos</h1>
+                <img src="/static/img/afro.png" alt="Logo Acessórios Afro" id="logo">
+                <h1>Acessórios Afro</h1>
             </a>
         </header>
 
         {% if usuario %}
         <nav>
-            <a href="/" title="Listar meus trecos"><i
-                    class="fa-regular fa-rectangle-list fa-fw"></i><span>Listar</span></a>
+            <a href="/" title="Listar meus trecos"><i class="fa-regular fa-rectangle-list fa-fw"></i><span>Listar</span></a>
             <a href="/novo" title="Cadastrar novo treco"><i class="fa-solid fa-plus fa-fw"></i><span>Novo</span></a>
-            <a href="/perfil" id="navUsuario"><i class="fa-solid fa-user"></i><span>Olá {{ usuario.pnome }}!</span></a>
+            <a href="/perfil" id="navUsuario" title="Ir para meu perfil"><i class="fa-solid fa-user"></i><span>Olá {{ usuario.pnome }}!</span></a>
         </nav>
         {% endif %}
 
         <main>
-            {# O conteúdo de todas as páginas do site abrem no bloco 'content' abaixo #}
+            {# O conteúdo de todas as páginas do site abrem no bloco 'conteudo' abaixo #}
             {% block conteudo %}{% endblock %}
         </main>
 
         <footer>
-            <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank"
-                rel="license noopener noreferrer">
-                <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"
-                    alt="Creative Commons License">
-                <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"
-                    alt="Creative Commons Attribution">
-                <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"
-                    alt="Creative Commons Share Adapt">
-            </a> By Joca da Silva
+            <p>&copy; 2024 Acessórios Afro - Todos os direitos reservados.</p>
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer">
+                <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="Creative Commons License">
+                <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="Creative Commons Attribution">
+                <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="Creative Commons Share Adapt">
+            </a> By Sandra & Emanuella.
         </footer>
 
     </div>

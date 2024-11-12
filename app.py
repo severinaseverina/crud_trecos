@@ -56,69 +56,51 @@ def start():
     # }
 
 
-@app.route("/")  # Rota raiz, equivalente a página inicial do site (index)
-def index():  # Função executada ao acessar a rota raiz
-
-    # Se o usuário não está logado redireciona para a página de login
+@app.route("/")
+def index():
     if g.usuario == '':
         return redirect(url_for('login'))
 
     acao = request.args.get('a')
 
-    # Um SQL de teste para exibir todos os 'trecos' do usuário conectado
     sql = '''
-        SELECT t_id, t_foto, t_nome, t_descricao, t_localizacao
-        FROM treco
-        WHERE t_usuario = %s
-            AND t_status = 'on'
-        ORDER BY t_data DESC
+        SELECT a_id, a_foto, a_nome, a_descricao, a_localizacao, a_material, a_tipo
+        FROM acessorio
+        WHERE a_usuario = %s
+            AND a_status = 'on'
+        ORDER BY a_data DESC
     '''
     cur = mysql.connection.cursor()
     cur.execute(sql, (g.usuario['id'],))
-    trecos = cur.fetchall()
+    acessorios = cur.fetchall()
     cur.close()
 
-    # Teste de mesa para verificar o retorno dos dados do banco de dados
-    # print('\n\n\n', trecos, '\n\n\n')
-
-    # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {
-        'titulo': 'CRUDTrecos',
+        'titulo': 'Acessórios Afro - Loja Virtual',
         'usuario': g.usuario,
-        'trecos': trecos,
+        'acessorios': acessorios,
         'acao': acao,
     }
 
-    # Renderiza o template HTML, passando valores (pagina) para ele
     return render_template('index.html', **pagina)
+
 
 
 # Rota para a página de cadastro de novo treco
 @app.route('/novo', methods=['GET', 'POST'])
-def novo():  # Função executada para cadastrar novo treco
-
-    # Se o usuário não está logado redireciona para a página de login
+def novo():
     if g.usuario == '':
         return redirect(url_for('login'))
 
-    # Variável que ativa a mensagem de sucesso no HTML
     sucesso = False
 
-    # Se o formulário foi enviado
     if request.method == 'POST':
-
-        # Obtém os dados preenchidos na forma de dicionário
         form = dict(request.form)
 
-        # Teste de mesa (comente depois dos testes)
-        # Verifica se os dados do formulário chegaram ao back-end
-        # print('\n\n\n', form, '\n\n\n')
-
-        # Grava os dados no banco de dados
         sql = '''
-            INSERT INTO treco (
-                t_usuario, t_foto, t_nome, t_descricao, t_localizacao
-            ) VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO acessorio (
+                a_usuario, a_foto, a_nome, a_descricao, a_localizacao, a_material, a_tipo
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s)
         '''
         cur = mysql.connection.cursor()
         cur.execute(sql, (
@@ -127,43 +109,41 @@ def novo():  # Função executada para cadastrar novo treco
             form['nome'],
             form['descricao'],
             form['localizacao'],
+            form['material'],
+            form['tipo'],
         ))
         mysql.connection.commit()
         cur.close()
 
         sucesso = True
 
-    # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {
-        'titulo': 'CRUDTrecos - Novo Treco',
+        'titulo': 'Acessórios Afro - Novo Acessório',
         'usuario': g.usuario,
         'sucesso': sucesso,
     }
 
-    # Renderiza o template HTML, passaod valores para ele
     return render_template('novo.html', **pagina)
+
 
 
 @app.route('/edita/<id>', methods=['GET', 'POST'])
 def edita(id):
-
-    # Se o usuário não está logado redireciona para a página de login
     if g.usuario == '':
         return redirect(url_for('login'))
 
-    # Se o formulário foi enviado
     if request.method == 'POST':
         form = dict(request.form)
 
-        # print('\n\n\n FORM:', form, '\n\n\n')
-
         sql = '''
-            UPDATE treco 
-            SET t_foto = %s,
-                t_nome = %s,
-                t_descricao = %s,
-                t_localizacao = %s
-            WHERE t_id = %s
+            UPDATE acessorio 
+            SET a_foto = %s,
+                a_nome = %s,
+                a_descricao = %s,
+                a_localizacao = %s,
+                a_material = %s,
+                a_tipo = %s
+            WHERE a_id = %s
         '''
         cur = mysql.connection.cursor()
         cur.execute(sql, (
@@ -171,6 +151,8 @@ def edita(id):
             form['nome'],
             form['descricao'],
             form['localizacao'],
+            form['material'],
+            form['tipo'],
             id,
         ))
         mysql.connection.commit()
@@ -179,28 +161,27 @@ def edita(id):
         return redirect(url_for('index', a='editado'))
 
     sql = '''
-        SELECT * FROM treco
-        WHERE t_id = %s
-            AND t_usuario = %s
-            AND t_status = 'on'
+        SELECT * FROM acessorio
+        WHERE a_id = %s
+            AND a_usuario = %s
+            AND a_status = 'on'
     '''
     cur = mysql.connection.cursor()
     cur.execute(sql, (id, g.usuario['id'],))
     row = cur.fetchone()
     cur.close()
 
-    # print('\n\n\n DB:', row, '\n\n\n')
-
     if row == None:
         abort(404)
 
     pagina = {
-        'titulo': 'CRUDTrecos',
+        'titulo': 'Acessórios Afro - Editar Acessório',
         'usuario': g.usuario,
-        'treco': row,
+        'acessorio': row,
     }
 
     return render_template('edita.html', **pagina)
+
 
 
 @app.route('/apaga/<id>')
@@ -304,7 +285,7 @@ def login():
 
     # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {
-        'titulo': 'CRUDTrecos - Login',
+        'titulo': 'Acessorios Afro - Login',
         'erro': erro
     }
 
@@ -343,7 +324,7 @@ def cadastro():
 
     # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {
-        'titulo': 'CRUDTrecos - Cadastre-se',
+        'titulo': 'Acessorios Afro - Cadastre-se',
     }
 
     return render_template('cadastro.html', **pagina)
@@ -408,7 +389,7 @@ def novasenha():
 
     # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {
-        'titulo': 'CRUDTrecos - Nova Senha',
+        'titulo': 'Acessorios AFRO - Nova Senha',
         'erro': erro,
         'novasenha': novasenha,
     }
@@ -445,7 +426,7 @@ def perfil():
 
     # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {
-        'titulo': 'CRUDTrecos - Novo Treco',
+        'titulo': 'Acessorios Afros - Novo Treco',
         'usuario': g.usuario,  # Dados do cookie do usuário
     }
 
@@ -570,4 +551,4 @@ def page_not_found(e):
 # Executa o servidor HTTP se estiver no modo de desenvolvimento
 # Remova / comente essas linhas no modo de produção
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=8000)
