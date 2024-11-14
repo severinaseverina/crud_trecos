@@ -1,48 +1,58 @@
+{# Inclui o template principal nesta página #}
 {% extends '_template.html' %}
 
+{# Bloco com conteúdo desta página, que será renderizado no template principal #}
 {% block conteudo %}
 
 <h2>Lista de Trecos</h2>
 
 <div class="lista">
-    {% if trecos %}
-        {% for treco in trecos %}
-        <div class="item">
-            <a href="{{ treco.t_foto }}" target="_blank"><img src="{{ treco.t_foto }}" alt="{{ treco.t_nome }}"></a>
-            <div>
-                <a class="flutua-icone" href="/apaga/{{ treco.t_id }}" title="Apagar {{ treco.t_nome }}." 
-                   onclick="return confirm('Tem certeza que deseja apagar este treco?')">
-                    <i class="fa-regular fa-trash-can fa-fw"></i>
-                </a>
-                <a class="flutua-icone" href="/edita/{{ treco.t_id }}" title="Editar {{ treco.t_nome }}.">
-                    <i class="fa-solid fa-pen-to-square fa-fw"></i>
-                </a>
-                <h4>{{ treco.t_nome }}</h4>
-                <p>{{ treco.t_descricao }}</p>
-                <small>Local: {{ treco.t_localizacao }}</small>
-            </div>
+
+    {% for item in items %}
+
+    <div class="item">
+        <a href="{{ item.t_foto }}" target="_blank"><img src="{{ item.t_foto }}" alt="{{ item.t_nome }}"></a>
+        <div>
+            <a class="flutua-icone" href="/apaga/{{ item.t_id }}" title="Apagar {{ item.t_nome }}." onclick="return confirm('Term certeza que deseja apagar este item?')">
+                <i class="fa-regular fa-trash-can fa-fw"></i>
+            </a>
+            <a class="flutua-icone" href="/edita/{{ item.t_id }}" title="Editar {{ item.t_nome }}.">
+                <i class="fa-solid fa-pen-to-square fa-fw"></i>
+            </a>
+            <h4>{{item.t_tipo}} - {{ item.t_nome }}</h4>
+            {{ item.t_descricao }}
+            <small>Local: {{ item.t_localizacao }}</small>
         </div>
-        {% endfor %}
-    {% else %}
-        <p>Não há trecos cadastrados. <a href="/novo">Clique aqui para cadastrar um novo treco</a>.</p>
-    {% endif %}
+    </div>
+
+    {% endfor %}
+
 </div>
 
-{% if acao %}
-<dialog id="myDialog" aria-live="assertive">
+{% if acao == 'apagado' %}
+
+<dialog id="myDialog">
     <h4>Oba!</h4>
-    <p>
-        {% if acao == 'apagado' %}
-            Seu treco foi apagado com sucesso!
-        {% elif acao == 'editado' %}
-            Seu treco foi editado com sucesso!
-        {% endif %}
-    </p>
+    <p>Seu treco foi apagado com sucesso!</p>
     <form method="dialog">
         <button onclick="window.history.pushState({}, '', '/')">OK</button>
     </form>
 </dialog>
 <script>myDialog.showModal()</script>
+
+{% endif %}
+
+{% if acao == 'editado' %}
+
+<dialog id="myDialog">
+    <h4>Oba!</h4>
+    <p>Seu treco foi editado com sucesso!</p>
+    <form method="dialog">
+        <button onclick="window.history.pushState({}, '', '/')">OK</button>
+    </form>
+</dialog>
+<script>myDialog.showModal()</script>
+
 {% endif %}
 
 {% endblock %}

@@ -4,26 +4,45 @@
 {# Bloco com conteúdo desta página #}
 {% block conteudo %}
 
-<h2>Novo Treco</h2>
+<h2>Novo Acessório</h2>
 
-<p>Preencha todos os campos para cadastrar um novo treco.</p>
+<p>Preencha todos os campos para cadastrar um novo acessório.</p>
 
-<form method="POST" action="{{ url_for('novo') }}" enctype="multipart/form-data">
-    <label for="foto">Foto do Acessório</label>
-    <input type="file" name="foto" id="foto" required>
+<form action="/novo" method="post" id="formNovo">
 
-    <label for="nome">Nome do Acessório</label>
-    <input type="text" name="nome" id="nome" required>
+    <p>
+        <label for="foto">
+            URL da Foto: 
+            <span class="field-help" title="URL da foto local ou na Internet que deve iniciar com 'http://' ou 'https://'."><i class="fa-solid fa-circle-question"></i></span>
+        </label>
+        <input type="url" name="foto" id="foto" required placeholder="https://">
+    </p>
 
-    <label for="descricao">Descrição</label>
-    <textarea name="descricao" id="descricao" required></textarea>
+    <p>
+        <label for="nome">
+            Nome:
+            <span class="field-help" title="Nome que identifica o treco."><i class="fa-solid fa-circle-question"></i></span>
+        </label>
+        <input type="text" name="nome" id="nome" required minlength="3">
+    </p>
 
-    <label for="localizacao">Localização</label>
-    <input type="text" name="localizacao" id="localizacao" required>
+    <p>
+        <label for="descricao">
+            Descrição:
+            <span class="field-help" title="Descrição completa e detalhada do treco."><i class="fa-solid fa-circle-question"></i></span>
+        </label>
+        <textarea name="descricao" id="descricao" required minlength="5"></textarea>
+    </p>
 
-    <label for="material">Material</label>
-    <input type="text" name="material" id="material" required>
+    <p>
+        <label for="localizacao">
+            Localização:
+            <span class="field-help" title="Nome que identifica o treco."><i class="fa-solid fa-circle-question"></i></span>
+        </label>
+        <input type="text" name="localizacao" id="localizacao" required minlength="3">
+    </p>
 
+    <p>
     <label for="tipo">Tipo de Acessório</label>
     <select name="tipo" id="tipo" required>
         <option value="colar">Colar</option>
@@ -31,6 +50,7 @@
         <option value="pulseira">Pulseira</option>
         <!-- Outros tipos -->
     </select>
+   </p>
 
     <button type="submit">Cadastrar Acessório</button>
 </form>
